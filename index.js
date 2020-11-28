@@ -5,69 +5,66 @@
 
 */
 
-function obterUsuário(callback) {
-  setTimeout(() => {
-    return callback(null, {
-      id: 1, 
-      nome: 'Aladdin', 
-      dataNascimento: new Date()
-    }
+function obterUsuario() {
+  //Quando der algum problema -> REJECT
+  //Quando obtiver sucesso -> RESOLVE
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // return reject(new Error('Big mistake'))
+      return resolve({
+        id: 1,
+        nome: 'Aladdin',
+        dataNascimento: new Date()
+      })
+    }, 1000);
+  })
+}
 
-  )}, 1000);
+function obterTelefone(idUsuario) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        telefone: '11111111',
+        ddd: '11'
+      }
+      )
+    }, 2000);
+  })
 
 }
 
-function obterTelefone(idUsuário, callback) {
-  setTimeout(() => {
-    return callback(null, {
-      telefone: '11111111', 
-      ddd: '11'
-    }
-
-  )}, 2000);
-
-}
-
-function obterEndereco(idUsuário, callback) {
+function obterEndereco(idUsuario, callback) {
   setTimeout(() => {
     return callback(null, {
       rua: 'bobos',
       numero: 0
     }
 
-  )}, 2000)
-
+    )
+  }, 2000)
 }
 
-// Callback func de forma externa
+const usuarioPromise = obterUsuario()
+// Para manipular o sucesso usamos a função .then
+// Para manipular o erro usamos o .catch
 
-// function resolverUsuario(erro, usuario){
-//   console.log('usuário', usuario);
+usuarioPromise
+  .then((usuario) => {
+    return obterTelefone(usuario.id)
 
-// }
-
-obterUsuário(function resolverUsuario(error, usuario){
-  if(error) {
-    console.error('Falha em USUÁRIO', errror);
-    return
-  }
-  obterTelefone(usuario.id, function resolverTelefone(erro1, telefone){
-    if(erro1){
-      console.error('Falha em TELEFONE', erro1);
-      return
-    }
-
-    obterEndereco(usuario.id, function resolverEndereco(erro2, endereco){
-      if(erro1){
-        console.error('Falha em Endereço', erro2);
-        return
-      }
-      
-      console.log(`
-      Nome: ${usuario.nome},
-      Endereço: ${endereco.rua}, ${endereco.numero},
-      Telefone: ${telefone.ddd} ${telefone.telefone}`);
-    })
+      .then((result) => {
+        return {
+          user: {
+            nome: usuario.nome,
+            id: usuario.id,
+          },
+          telefone: result
+        }
+      })
+      .then((resultado) => {
+        console.log('Resultado', resultado);
+      }).catch((error) => {
+        console.log('Error', error);
+      })
   })
-})
 
