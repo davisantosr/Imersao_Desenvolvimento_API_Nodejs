@@ -15,10 +15,19 @@ async function main() {
 
     // console.timeEnd('usingfor')
 
-    for(let i in result.results) {
-      const pessoa = result.results[i]
+    // console.time('usingforin')
+
+    // for(let i in result.results) {
+    //   const pessoa = result.results[i]
+    //   names.push(pessoa.name)
+    // }
+
+    // console.timeEnd('usingforin')
+
+    for(pessoa of result.results){
       names.push(pessoa.name)
     }
+
     console.log(`names: `, names);
 
   } catch(error) {
