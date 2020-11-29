@@ -56,15 +56,9 @@ async function main() {
   try {
     console.time('media-promise')
     const usuario = await obterUsuario()
+    const telefone = await obterTelefone(usuario.id)
+    const endereco = await obterEnderecoAsync(usuario.id)
 
-    const resultado = await Promise.all([
-      obterTelefone(usuario.id),
-      obterEnderecoAsync(usuario.id)
-    ])
-    // telefone e endereco não dependem um do outro. Usar Promise.all([]) melhora a perfomance
-    const telefone = resultado[0]
-    const endereco = resultado[1]
-    
     console.log(`
       Nome: (${telefone.ddd}) ${telefone.telefone},
       Endereco: ${endereco.rua}, ${endereco.numero}
@@ -76,6 +70,7 @@ async function main() {
     console.log('Falhou', error);
   }
 }
+
 
 
 
