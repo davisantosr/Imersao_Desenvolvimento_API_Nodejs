@@ -5,28 +5,32 @@ async function main() {
     const result = await service.obterPessoas('a')
 
     const names = []
-    // console.time('usingfor')
-    // for(let i=0; i<= result.results.length -1; i++){
-    //   const pessoa = result.results[i]
+    console.time('usingfor')
+    for(let i=0; i<= result.results.length -1; i++){
+      const pessoa = result.results[i]
 
-    //   names.push(pessoa.name)
+      names.push(pessoa.name)
     
-    // }
+    }
 
-    // console.timeEnd('usingfor')
+    console.timeEnd('usingfor')
 
-    // console.time('usingforin')
+    console.time('usingforin')
 
-    // for(let i in result.results) {
-    //   const pessoa = result.results[i]
-    //   names.push(pessoa.name)
-    // }
+    for(let i in result.results) {
+      const pessoa = result.results[i]
+      names.push(pessoa.name)
+    }
 
-    // console.timeEnd('usingforin')
+    console.timeEnd('usingforin')
 
+    console.time('usingforof')
+    
     for(pessoa of result.results){
       names.push(pessoa.name)
     }
+
+    console.timeEnd('usingforof')
 
     console.log(`names: `, names);
 
