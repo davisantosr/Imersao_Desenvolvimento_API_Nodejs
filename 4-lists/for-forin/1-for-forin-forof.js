@@ -5,11 +5,19 @@ async function main() {
     const result = await service.obterPessoas('a')
 
     const names = []
-    for(let i=0; i<= result.results.length -1; i++){
-      const pessoa = result.results[i]
+    // console.time('usingfor')
+    // for(let i=0; i<= result.results.length -1; i++){
+    //   const pessoa = result.results[i]
 
-      names.push(pessoa.name)
+    //   names.push(pessoa.name)
     
+    // }
+
+    // console.timeEnd('usingfor')
+
+    for(let i in result.results) {
+      const pessoa = result.results[i]
+      names.push(pessoa.name)
     }
     console.log(`names: `, names);
 
