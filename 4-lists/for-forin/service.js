@@ -8,13 +8,13 @@ async function obterPessoas(nome) {
   return response.data
 }
 
-obterPessoas('r2')
-  .then((resultado) => {
-    console.log('resultado: ', resultado);
-  })
-  .catch(function (error) {
-    console.log('Ocorreu um erro', error);
-  })
+// obterPessoas()
+//   .then((resultado) => {
+//     console.log('resultado: ', resultado);
+//   })
+//   .catch(function (error) {
+//     console.log('Ocorreu um erro', error);
+//   })
 
 module.exports = {
   obterPessoas
