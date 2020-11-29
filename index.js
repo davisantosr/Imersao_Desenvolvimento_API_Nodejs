@@ -5,6 +5,11 @@
 
 */
 
+// Importamos um módulo interno do node.js
+const util = require('util')
+
+const obterEnderecoAsync = util.promisify(obterEndereco)
+
 function obterUsuario() {
   //Quando der algum problema -> REJECT
   //Quando obtiver sucesso -> RESOLVE
@@ -44,108 +49,61 @@ function obterEndereco(idUsuario, callback) {
   }, 2000)
 }
 
-const usuarioPromise = obterUsuario()
+
+//adicionar a palavra async -> Automaticamente retornará uma Promise
+main()
+async function main() {
+  try {
+    console.time('media-promise')
+    const usuario = await obterUsuario()
+    const telefone = await obterTelefone(usuario.id)
+    const endereco = await obterEnderecoAsync(usuario.id)
+
+    console.log(`
+      Nome: (${telefone.ddd}) ${telefone.telefone},
+      Endereco: ${endereco.rua}, ${endereco.numero}
+    `);
+
+    console.timeEnd('media-promise')
+  }
+  catch(error){
+    console.log('Falhou', error);
+  }
+}
+
+
+
+
+// const usuarioPromise = obterUsuario()
 // Para manipular o sucesso usamos a função .then
 // Para manipular o erro usamos o .catch
 
-usuarioPromise
-  .then((usuario) => {
-    return obterTelefone(usuario.id)
-
-      .then((result) => {
-        return {
-          user: {
-            nome: usuario.nome,
-            id: usuario.id,
-          },
-          telefone: result
-        }
-      })
-      .then((resultado) => {
-        console.log('Resultado', resultado);
-      }).catch((error) => {
-        console.log('Error', error);
-      })
-  })
-
-
-  //  ========================  Training =============================
-
-
-
-
-
-/*
-Obter Loja
-Obter Item
-Obter Referencia
-
-*/
-
-const obterLoja = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      return resolve({
-        id: 2,
-        nome1: 'LojaX'
-      })
-    }, 3000)
-  })
-}
-
-const obterItem = (lojaId) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      return resolve({
-        id: 1,
-        nome: 'Go Pro'
-      })
-
-    }, 1000)
-  })
-}
-
-const obterReferencia = (itemId) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      return resolve({
-        versao: 'hero5'
-      })
-    })
-  })
-}
-
-const resultLoja = obterLoja()
-
-//Observar que a cada .then há o objeto resolvido na anterior
-// (Resolvido conforme passado nas func)
-
-resultLoja
-  .then((loja) => {
-    return obterItem(loja.id)
-      .then((item) => {
-        return obterReferencia(item.id)
-          .then((result) => {
-            return {
-              info: {
-                loja: loja.nome1,
-                item: item.nome,
-                modelo: result.versao,
-
-                //Feito para observar o contexto
-                teste: result.nome1
-              }
-            }
-          })
-          .then((allData) => {
-            console.log(
-              `Loja: ${allData.info.loja}, Item: ${allData.info.item}, Modelo: ${allData.info.modelo}, Teste: ${allData.info.teste}`
-            );
-          })
-      })
-  })
-
-
-
-
+// usuarioPromise
+//   .then((usuario) => {
+//     return obterTelefone(usuario.id)
+//       .then((result) => {
+//         return {
+//           user: {
+//             nome: usuario.nome,
+//             id: usuario.id,
+//           },
+//           telefone: result
+//         }
+//       })
+//   })
+//   .then(function(resultado) {
+//     const endereco = obterEnderecoAsync(resultado.usuario.id)
+//     return endereco.then(function resolverEndereco(result) {
+//       return {
+//         usuario: resultado.usuario,
+//         telefone: resultado.telefone,
+//         endereco: result
+//       }
+//     })
+//   })
+//   .then((resultado) => {
+//     console.log('Resultado', resultado);
+//   }).catch((error) => {
+//     console.log('Error', error);
+//   })
 
