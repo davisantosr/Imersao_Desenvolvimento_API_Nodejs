@@ -12,16 +12,19 @@ class Database {
     this.NOME_ARQUIVO = 'herois.json'
   }
 
-  obterDadosArquivo() {
+  async obterDadosArquivo() {
     const arquivo = await readFileAsync(this.NOME_ARQUIVO, 'utf8')
-
+    return JSON.parse(arquivo.toString())
   }  
 
   escreverArquivo() {
-
   }
-  listar() {
-    return null
+
+  async listar(id) {
+    const dados = await this.obterDadosArquivo()
+    const dadosFiltrados = dados.filter(item => (id ? (item.id === id) : true))
+
+    return dadosFiltrados
   }
 }
 
