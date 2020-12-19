@@ -15,11 +15,11 @@ const DEFAULT_ITEM_ATUALIZAR = {
 }
 describe('Suite de manipulação de heróis', () => {
 
-  // before( async () => {
-  //   await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
-  //   await database.cadastrar(DEFAULT_ITEM_ATUALIZAR)
-  //   //Passar um before para cadastrar herói para passar no primeiro teste
-  // })
+  before( async () => {
+    await database.cadastrar(DEFAULT_ITEM_CADASTRAR)
+    await database.cadastrar(DEFAULT_ITEM_ATUALIZAR)
+    //Passar um before para cadastrar herói para passar no primeiro teste
+  })
 
   it('deve pesquisar um herói usando arquivos', async () => {
     const expected = DEFAULT_ITEM_CADASTRAR
