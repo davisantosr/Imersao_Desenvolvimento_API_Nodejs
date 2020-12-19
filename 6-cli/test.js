@@ -13,7 +13,7 @@ describe('Suite de manipulação de heróis', () => {
     const expected = DEFAULT_ITEM_CADASTRAR
     const resultado = await database.listar(expected.id)
 
-    ok(resultado, expected) 
+    deepEqual(resultado, expected) 
     // ok: o primeiro parametro somente verifica 
     // true ou false para saber se há valor diferente de null
   })
