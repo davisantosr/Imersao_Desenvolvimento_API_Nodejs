@@ -5,7 +5,7 @@ const database = require('./database')
 const DEFAULT_ITEM_CADASTRAR = {
   nome: 'Flash',
   poder: 'Speed',
-  id: 2
+  id: 1
 }
 
 const DEFAULT_ITEM_ATUALIZAR = {
